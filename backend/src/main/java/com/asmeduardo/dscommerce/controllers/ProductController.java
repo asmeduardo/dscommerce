@@ -18,15 +18,15 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> findById(@PathVariable("id") Long id) {
-        ProductDTO dto = productService.findById(id);
-        return ResponseEntity.ok(dto);
-    }
-
     @GetMapping
     public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
         Page<ProductDTO> dto = productService.findAll(pageable);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ProductDTO> findById(@PathVariable("id") Long id) {
+        ProductDTO dto = productService.findById(id);
         return ResponseEntity.ok(dto);
     }
 
@@ -41,5 +41,11 @@ public class ProductController {
     public ResponseEntity<ProductDTO> update(@PathVariable("id") Long id, @RequestBody ProductDTO dto) {
         dto = productService.update(id, dto);
         return ResponseEntity.ok(dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+        productService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
