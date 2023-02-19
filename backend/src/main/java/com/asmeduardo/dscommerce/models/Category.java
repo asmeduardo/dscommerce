@@ -1,4 +1,4 @@
-package com.asmeduardo.dscommerce.entities;
+package com.asmeduardo.dscommerce.models;
 
 import jakarta.persistence.*;
 
