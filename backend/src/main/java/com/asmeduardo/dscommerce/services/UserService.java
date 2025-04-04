@@ -5,7 +5,6 @@ import com.asmeduardo.dscommerce.models.User;
 import com.asmeduardo.dscommerce.projections.UserDetailsProjection;
 import com.asmeduardo.dscommerce.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,8 +17,6 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private ResourceLoader resourceLoader;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
