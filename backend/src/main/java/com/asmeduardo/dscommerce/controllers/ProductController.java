@@ -22,14 +22,9 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<Page<ProductMinDTO>> findAll(Pageable pageable) {
-        return ResponseEntity.ok(productService.findAll(pageable));
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<Page<ProductMinDTO>> findByName(
-            @RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {
-        return ResponseEntity.ok(productService.findByName(name, pageable));
+    public ResponseEntity<Page<ProductMinDTO>> findAll(@RequestParam(name = "name", defaultValue = "") String name,
+            Pageable pageable) {
+        return ResponseEntity.ok(productService.findAll(name, pageable));
     }
 
     @GetMapping(value = "/{id}")

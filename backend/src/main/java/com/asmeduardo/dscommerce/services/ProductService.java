@@ -1,12 +1,15 @@
 package com.asmeduardo.dscommerce.services;
 
+import com.asmeduardo.dscommerce.dtos.CategoryDTO;
 import com.asmeduardo.dscommerce.dtos.ProductDTO;
 import com.asmeduardo.dscommerce.dtos.ProductMinDTO;
+import com.asmeduardo.dscommerce.models.Category;
 import com.asmeduardo.dscommerce.models.Product;
 import com.asmeduardo.dscommerce.repositories.ProductRepository;
 import com.asmeduardo.dscommerce.services.exceptions.DatabaseException;
 import com.asmeduardo.dscommerce.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -22,12 +25,7 @@ public class ProductService {
     private ProductRepository productRepository;
 
     @Transactional(readOnly = true)
-    public Page<ProductMinDTO> findAll(Pageable pageable) {
-        return productRepository.findAll(pageable).map(ProductMinDTO::new);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<ProductMinDTO> findByName(String name, Pageable pageable) {
+    public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
         return productRepository.searchByName(name, pageable).map(ProductMinDTO::new);
     }
 
@@ -75,5 +73,12 @@ public class ProductService {
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgUrl(dto.getImgUrl());
+
+        entity.getCategories().clear();
+        for (CategoryDTO catDto : dto.getCategories()) {
+            Category cat = new Category();
+            cat.setId(catDto.getId());
+            entity.getCategories().add(cat);
+        }
     }
 }
