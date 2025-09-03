@@ -26,12 +26,11 @@ public class User implements UserDetails {
     private List<Order> orders = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(name = "tb_user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User() {}
+    public User() {
+    }
 
     public User(Long id, String name, String email, String phone, LocalDate birthDate, String password) {
         this.id = id;
@@ -114,14 +113,17 @@ public class User implements UserDetails {
 
     public boolean hasRole(String roleName) {
         for (Role role : roles) {
-            if(role.getAuthority().equals(roleName)) return true;
+            if (role.getAuthority().equals(roleName)) {
+                return true;
+            }
         }
         return false;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass())
+            return false;
         User user = (User) o;
         return Objects.equals(id, user.id);
     }
